@@ -80,7 +80,7 @@ class ConfirmPushModal extends Modal {
 		render(initialOperations);
 
 		new Setting(this.contentEl)
-			.addButton((btn) =>
+			.addItem((btn) =>
 				btn.setButtonText("Cancel").onClick(() => this.close())
 			)
 			.addButton((btn) =>
@@ -249,11 +249,8 @@ export const push = async (t: ObsidianGoogleDrive) => {
 	const { vault } = t.app;
 	const adapter = vault.adapter;
 
-	const proceed = await new Promise<boolean>((resolve) => {
-		new ConfirmPushModal(t, initialOperations, resolve).open();
-	});
-
-	if (!proceed) return;
+	// PUSH_CONFIRMATION_REMOVED - Push directly without modal confirmation
+	new Notice('Pushing changes to Google Drive...');
 
 	const syncNotice = await t.startSync();
 
